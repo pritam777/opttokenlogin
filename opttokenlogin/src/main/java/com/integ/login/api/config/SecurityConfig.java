@@ -13,10 +13,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/hello").permitAll() // No token required here
-                .anyRequest().authenticated()             // Other endpoints are secured
+                .requestMatchers("/api/v1/public/**").permitAll() // Allow all under /public
+                .anyRequest().authenticated()
             )
-            .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
+            .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults())); // moved inside the chain
 
         return http.build();
     }
